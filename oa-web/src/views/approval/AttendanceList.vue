@@ -1,8 +1,41 @@
 <template>
-  <div class="attendance-list-page">
-    <h2>Attendance</h2>
+  <div>
+    <el-card>
+      <el-tabs v-if="userStore.role==='admin'" v-model="activeTab" @tab-change="fetchData">
+        <el-tab-pane label="我的考勤" name="my" />
+        <el-tab-pane label="全部考勤" name="all" />
+      </el-tabs>
+      <el-table :data="records" stripe>
+        <el-table-column prop="id" label="ID" width="80" />
+        <el-table-column prop="recordDate" label="日期" width="120" />
+        <el-table-column prop="signInTime" label="签到时间" width="160" />
+        <el-table-column prop="signOutTime" label="签退时间" width="160" />
+        <el-table-column prop="status" label="状态" width="100" />
+        <el-table-column prop="username" label="用户名" width="120" v-if="activeTab==='all'" />
+      </el-table>
+      <el-pagination v-model:current-page="page" :total="total" :page-size="10"
+                     @current-change="fetchData" layout="total, prev, pager, next" style="margin-top:16px" />
+    </el-card>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { useUserStore } from '@/stores/user'
+import { getAttendances, getAllAttendances } from '@/api/approval'
+
+const userStore = useUserStore()
+const activeTab = ref('my')
+const records = ref([])
+const total = ref(0)
+const page = ref(1)
+
+async function fetchData() {
+  const fn = activeTab.value === 'all' ? getAllAttendances : getAttendances
+  const res = await fn({ page: page.value, pageSize: 10 })
+  records.value = res.data.records
+  total.value = res.data.total
+}
+
+fetchData()
 </script>
