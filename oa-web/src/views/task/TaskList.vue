@@ -3,7 +3,7 @@
     <el-card>
       <el-tabs v-model="activeTab" @tab-change="fetchData">
         <el-tab-pane label="我的任务" name="my" />
-        <el-tab-pane label="分配的任务" name="assigned" />
+        <el-tab-pane v-if="userStore.role==='admin' || userStore.role==='manager'" label="分配的任务" name="assigned" />
       </el-tabs>
       <div style="display:flex;justify-content:space-between;margin-bottom:16px">
         <div>
