@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+      <div class="toolbar">
         <div>
           <el-date-picker v-model="filterDate" type="date" value-format="YYYY-MM-DD" placeholder="按日期筛选" @change="fetchData" style="width:200px;margin-right:10px" />
           <el-input v-model="keyword" placeholder="搜索内容" style="width:200px" clearable @change="fetchData" />
@@ -21,7 +21,7 @@
         </el-table-column>
       </el-table>
       <el-pagination v-model:current-page="page" :total="total" :page-size="10"
-                     @current-change="fetchData" layout="total, prev, pager, next" style="margin-top:16px" />
+                     @current-change="fetchData" layout="total, prev, pager, next" />
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑日志':'写日志'" width="600px">

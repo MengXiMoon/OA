@@ -5,9 +5,9 @@
         <el-tab-pane label="我的任务" name="my" />
         <el-tab-pane v-if="userStore.role==='admin' || userStore.role==='manager'" label="分配的任务" name="assigned" />
       </el-tabs>
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+      <div class="toolbar">
         <div>
-          <el-input v-model="keyword" placeholder="搜索标题" style="width:240px" clearable @change="fetchData" />
+          <el-input v-model="keyword" placeholder="搜索标题" class="search-input" clearable @change="fetchData" />
         </div>
         <el-button v-if="userStore.role==='admin' || userStore.role==='manager'" type="primary" @click="openDialog()">创建任务</el-button>
       </div>
@@ -29,7 +29,7 @@
         </el-table-column>
       </el-table>
       <el-pagination v-model:current-page="page" :total="total" :page-size="10"
-                     @current-change="fetchData" layout="total, prev, pager, next" style="margin-top:16px" />
+                     @current-change="fetchData" layout="total, prev, pager, next" />
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑任务':'创建任务'" width="600px">

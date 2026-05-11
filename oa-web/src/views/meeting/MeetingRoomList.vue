@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-card>
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+      <div class="toolbar">
         <div>
-          <el-input v-model="keyword" placeholder="搜索名称" style="width:240px" clearable />
+          <el-input v-model="keyword" placeholder="搜索名称" class="search-input" clearable />
         </div>
         <el-button v-if="userStore.role==='admin'" type="primary" @click="openDialog()">新增会议室</el-button>
       </div>

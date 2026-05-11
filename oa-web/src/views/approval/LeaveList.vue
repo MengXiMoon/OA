@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-card>
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+      <div class="toolbar">
         <div>
-          <el-input v-model="keyword" placeholder="搜索" style="width:240px" clearable @change="fetchData" />
+          <el-input v-model="keyword" placeholder="搜索" class="search-input" clearable @change="fetchData" />
         </div>
         <el-button type="primary" @click="openDialog()">申请请假</el-button>
       </div>
@@ -25,7 +25,7 @@
         </el-table-column>
       </el-table>
       <el-pagination v-model:current-page="page" :total="total" :page-size="10"
-                     @current-change="fetchData" layout="total, prev, pager, next" style="margin-top:16px" />
+                     @current-change="fetchData" layout="total, prev, pager, next" />
     </el-card>
 
     <el-dialog v-model="dialogVisible" title="申请请假" width="600px">

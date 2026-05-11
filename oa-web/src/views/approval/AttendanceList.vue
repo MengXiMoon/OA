@@ -14,7 +14,7 @@
         <el-table-column prop="username" label="用户名" width="120" v-if="activeTab==='all'" />
       </el-table>
       <el-pagination v-model:current-page="page" :total="total" :page-size="10"
-                     @current-change="fetchData" layout="total, prev, pager, next" style="margin-top:16px" />
+                     @current-change="fetchData" layout="total, prev, pager, next" />
     </el-card>
   </div>
 </template>

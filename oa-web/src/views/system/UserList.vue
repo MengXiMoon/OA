@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-card>
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+      <div class="toolbar">
         <div>
-          <el-input v-model="keyword" placeholder="搜索用户名" style="width:240px" clearable @change="fetchData" />
+          <el-input v-model="keyword" placeholder="搜索用户名" class="search-input" clearable @change="fetchData" />
         </div>
       </div>
       <el-table :data="records" stripe>
@@ -22,7 +22,7 @@
         <el-table-column prop="createTime" label="创建时间" width="180" />
       </el-table>
       <el-pagination v-model:current-page="page" :total="total" :page-size="10"
-                     @current-change="fetchData" layout="total, prev, pager, next" style="margin-top:16px" />
+                     @current-change="fetchData" layout="total, prev, pager, next" />
     </el-card>
   </div>
 </template>
