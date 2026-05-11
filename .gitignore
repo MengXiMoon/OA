@@ -12,6 +12,9 @@ target/
 .project
 .classpath
 
+# Test data (local only)
+*src/main/resources/db/migration/V2__test_data.sql
+
 # OS
 .DS_Store
 Thumbs.db
