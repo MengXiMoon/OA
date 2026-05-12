@@ -374,7 +374,7 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
 
 /* ===== Form item global ===== */
 
-.el-form-item__label { padding-bottom: 4px; line-height: 1.4; }
+.el-form-item__label { padding-bottom: 0; line-height: 1.5; }
 
 /* ===== Toolbar Utilities ===== */
 
