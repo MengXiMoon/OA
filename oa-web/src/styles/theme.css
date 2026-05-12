@@ -112,6 +112,14 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  vertical-align: middle;
+  line-height: 1.5;
+}
+.el-table th.el-table__cell {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
 }
 .el-table--border .el-table__cell { border-right: none; }
 .el-table--border { border-left: none; border-right: none; }
