@@ -6,7 +6,7 @@
         <el-button v-if="userStore.role==='admin'" type="primary" @click="openDialog()">发布公告</el-button>
       </div>
       <el-table :data="records" stripe>
-        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="id" label="ID" width="70" />
         <el-table-column prop="title" label="标题" min-width="200" show-overflow-tooltip />
         <el-table-column label="发布时间" width="170">
           <template #default="{row}">{{ formatTime(row.createTime) }}</template>
