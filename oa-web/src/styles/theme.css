@@ -350,12 +350,26 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
 
 /* ===== Tooltip ===== */
 
-.el-tooltip__popper.is-dark {
-  background: #1f1f1f;
-  color: #fff;
+.el-tooltip__popper {
+  max-width: 360px;
+  word-break: break-all;
+}
+.el-tooltip__popper {
+  background: #1f1f1f !important;
+  color: #fff !important;
   font-size: 12px;
   border-radius: var(--radius-sm);
   padding: 6px 10px;
+  border: none;
+}
+.el-tooltip__popper.is-dark,
+.el-tooltip__popper.is-light {
+  background: #1f1f1f !important;
+  color: #fff !important;
+}
+.el-tooltip__popper .el-popper__arrow::before {
+  background: #1f1f1f !important;
+  border: none;
 }
 
 /* ===== Dropdown / Tag ===== */
