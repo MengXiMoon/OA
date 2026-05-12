@@ -116,9 +116,6 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
   padding: 10px 12px;
 }
 .el-table .el-table__cell {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   vertical-align: middle;
 }
 .el-table td.el-table__cell {
