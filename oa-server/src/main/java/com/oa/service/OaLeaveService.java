@@ -30,7 +30,7 @@ public class OaLeaveService extends ServiceImpl<OaLeaveMapper, OaLeave> {
     @Override
     public boolean save(OaLeave leave) {
         leave.setApplicantId(SecurityUtils.getCurrentUserId());
-        leave.setStatus("pending");
+        leave.setStatus("待审批");
         return super.save(leave);
     }
 

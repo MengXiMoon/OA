@@ -30,7 +30,7 @@ public class OaTravelService extends ServiceImpl<OaTravelMapper, OaTravel> {
     @Override
     public boolean save(OaTravel travel) {
         travel.setApplicantId(SecurityUtils.getCurrentUserId());
-        travel.setStatus("pending");
+        travel.setStatus("待审批");
         return super.save(travel);
     }
 
