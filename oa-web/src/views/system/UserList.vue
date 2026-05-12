@@ -12,7 +12,7 @@
         <el-table-column prop="realName" label="姓名" />
         <el-table-column prop="role" label="角色" width="120">
           <template #default="{row}">
-            <el-select v-model="row.role" @change="handleRoleChange(row)" size="small">
+            <el-select v-model="row.role" @change="handleRoleChange(row)">
               <el-option label="管理员" value="admin" />
               <el-option label="部门经理" value="manager" />
               <el-option label="普通员工" value="employee" />
