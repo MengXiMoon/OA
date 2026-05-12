@@ -30,7 +30,7 @@ public class TravelController {
     }
 
     @PutMapping("/{id}/approve")
-    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
+    @PreAuthorize("hasAnyRole('管理员', '部门经理')")
     public Result<Void> approve(@PathVariable Long id, @RequestBody Map<String, String> body) {
         travelService.approve(id, body.get("status"));
         return Result.success();

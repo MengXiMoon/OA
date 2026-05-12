@@ -27,14 +27,14 @@ public class CompanyEventController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('管理员')")
+    @PreAuthorize("hasRole('管理员')")
     public Result<Void> create(@RequestBody OaCompanyEvent event) {
         service.publish(event);
         return Result.success();
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('管理员')")
+    @PreAuthorize("hasRole('管理员')")
     public Result<Void> update(@PathVariable Long id, @RequestBody OaCompanyEvent event) {
         event.setId(id);
         service.updateById(event);
@@ -42,7 +42,7 @@ public class CompanyEventController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('管理员')")
+    @PreAuthorize("hasRole('管理员')")
     public Result<Void> delete(@PathVariable Long id) {
         service.removeById(id);
         return Result.success();

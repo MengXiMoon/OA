@@ -27,14 +27,14 @@ public class OutgoingFileController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
+    @PreAuthorize("hasAnyRole('管理员', '部门经理')")
     public Result<Void> create(@RequestBody OaOutgoingFile file) {
         service.save(file);
         return Result.success();
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
+    @PreAuthorize("hasAnyRole('管理员', '部门经理')")
     public Result<Void> update(@PathVariable Long id, @RequestBody OaOutgoingFile file) {
         file.setId(id);
         service.updateById(file);
@@ -42,7 +42,7 @@ public class OutgoingFileController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
+    @PreAuthorize("hasAnyRole('管理员', '部门经理')")
     public Result<Void> delete(@PathVariable Long id) {
         service.removeById(id);
         return Result.success();

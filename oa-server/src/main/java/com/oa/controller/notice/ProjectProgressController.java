@@ -27,14 +27,14 @@ public class ProjectProgressController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('管理员')")
+    @PreAuthorize("hasRole('管理员')")
     public Result<Void> create(@RequestBody OaProjectProgress progress) {
         service.save(progress);
         return Result.success();
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('管理员')")
+    @PreAuthorize("hasRole('管理员')")
     public Result<Void> update(@PathVariable Long id, @RequestBody OaProjectProgress progress) {
         progress.setId(id);
         service.updateById(progress);
@@ -42,7 +42,7 @@ public class ProjectProgressController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('管理员')")
+    @PreAuthorize("hasRole('管理员')")
     public Result<Void> delete(@PathVariable Long id) {
         service.removeById(id);
         return Result.success();
