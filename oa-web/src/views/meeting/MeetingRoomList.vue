@@ -8,13 +8,13 @@
         <el-button v-if="userStore.role==='admin'" type="primary" @click="openDialog()">新增会议室</el-button>
       </div>
       <el-table :data="records" stripe>
-        <el-table-column prop="id" label="ID" width="80" />
-        <el-table-column prop="name" label="名称" />
-        <el-table-column prop="location" label="位置" />
-        <el-table-column prop="capacity" label="容量" width="100" />
-        <el-table-column prop="hasProjector" label="投影仪" width="100" />
-        <el-table-column prop="status" label="状态" width="100" />
-        <el-table-column label="操作" width="200">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="name" label="名称" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="location" label="位置" min-width="100" show-overflow-tooltip />
+        <el-table-column prop="capacity" label="容量" width="70" />
+        <el-table-column prop="hasProjector" label="投影仪" width="80" />
+        <el-table-column prop="status" label="状态" width="80" />
+        <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
             <template v-if="userStore.role==='admin'">
