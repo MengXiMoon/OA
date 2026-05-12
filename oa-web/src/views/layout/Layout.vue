@@ -38,6 +38,5 @@ import Navbar from '@/components/common/Navbar.vue'
   flex: 1; min-width: 0;
   min-height: calc(100vh - 48px);
   padding: var(--space-page);
-  max-width: 960px; margin: 0 auto;
 }
 </style>

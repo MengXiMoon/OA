@@ -368,9 +368,13 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
 
 /* ===== Dialog Form ===== */
 
-.el-dialog .el-form-item { margin-bottom: 14px; }
-.el-dialog .el-form-item__label { font-size: 13px; }
+.el-dialog .el-form-item { margin-bottom: 12px; }
+.el-dialog .el-form-item__label { font-size: 13px; padding-bottom: 4px; line-height: 1.4; }
 .el-dialog .el-input__inner { font-size: 13px; }
+
+/* ===== Form item global ===== */
+
+.el-form-item__label { padding-bottom: 4px; line-height: 1.4; }
 
 /* ===== Toolbar Utilities ===== */
 
