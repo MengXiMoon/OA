@@ -28,7 +28,7 @@
         <el-menu-item index="/meeting-room">会议室管理</el-menu-item>
         <el-menu-item index="/meeting">会议管理</el-menu-item>
       </el-sub-menu>
-      <el-menu-item v-if="userStore.role==='admin'" index="/system"><el-icon><Setting /></el-icon><span>系统管理</span></el-menu-item>
+      <el-menu-item v-if="userStore.role==='管理员'" index="/system"><el-icon><Setting /></el-icon><span>系统管理</span></el-menu-item>
     </el-menu>
     <div class="sidebar-footer">OA v1.0</div>
   </div>

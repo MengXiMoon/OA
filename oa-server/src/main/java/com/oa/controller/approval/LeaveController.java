@@ -30,7 +30,7 @@ public class LeaveController {
     }
 
     @PutMapping("/{id}/approve")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
     public Result<Void> approve(@PathVariable Long id, @RequestBody Map<String, String> body) {
         leaveService.approve(id, body.get("status"));
         return Result.success();

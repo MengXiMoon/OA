@@ -22,7 +22,7 @@ public class MeetingController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
     public Result<Void> create(@RequestBody OaMeeting meeting) {
         meetingService.schedule(meeting);
         return Result.success();
@@ -36,7 +36,7 @@ public class MeetingController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
     public Result<Void> delete(@PathVariable Long id) {
         meetingService.removeById(id);
         return Result.success();

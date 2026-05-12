@@ -27,14 +27,14 @@ public class WeeklyReportController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> create(@RequestBody OaWeeklyReport report) {
         service.publish(report);
         return Result.success();
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> update(@PathVariable Long id, @RequestBody OaWeeklyReport report) {
         report.setId(id);
         service.updateById(report);
@@ -42,7 +42,7 @@ public class WeeklyReportController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> delete(@PathVariable Long id) {
         service.removeById(id);
         return Result.success();

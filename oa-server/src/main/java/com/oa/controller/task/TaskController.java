@@ -22,13 +22,13 @@ public class TaskController {
     }
 
     @GetMapping("/assigned")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
     public Result<PageResult<OaTask>> assignedTasks(PageQuery query) {
         return Result.success(taskService.getAssignedTasks(query));
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('管理员', '部门经理')")
     public Result<Void> create(@RequestBody OaTask task) {
         taskService.assignTask(task);
         return Result.success();

@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/system")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAuthority('管理员')")
 public class SystemController {
 
     private final SysUserService userService;

@@ -26,7 +26,7 @@ import { useUserStore } from '@/stores/user'
 const router = useRouter()
 const userStore = useUserStore()
 const roleName = computed(() => {
-  const map = { admin: '管理员', manager: '部门经理', employee: '普通员工' }
+  const map = { admin: '管理员', manager: '部门经理', employee: '普通员工', '管理员': '管理员', '部门经理': '部门经理', '普通员工': '普通员工' }
   return map[userStore.role] || ''
 })
 function handleLogout() { userStore.logout(); router.push('/login') }

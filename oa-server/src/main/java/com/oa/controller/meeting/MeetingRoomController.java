@@ -22,14 +22,14 @@ public class MeetingRoomController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> create(@RequestBody OaMeetingRoom room) {
         roomService.save(room);
         return Result.success();
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> update(@PathVariable Long id, @RequestBody OaMeetingRoom room) {
         room.setId(id);
         roomService.updateById(room);
@@ -37,7 +37,7 @@ public class MeetingRoomController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> delete(@PathVariable Long id) {
         roomService.removeById(id);
         return Result.success();

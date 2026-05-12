@@ -22,7 +22,7 @@ public class AttendanceController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<PageResult<OaAttendance>> listAll(PageQuery query) {
         return Result.success(attendanceService.pageQueryAll(query));
     }

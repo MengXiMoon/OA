@@ -3,13 +3,13 @@
     <el-card>
       <el-tabs v-model="activeTab" @tab-change="fetchData">
         <el-tab-pane label="我的任务" name="my" />
-        <el-tab-pane v-if="userStore.role==='admin' || userStore.role==='manager'" label="分配的任务" name="assigned" />
+        <el-tab-pane v-if="userStore.role==='管理员' || userStore.role==='部门经理'" label="分配的任务" name="assigned" />
       </el-tabs>
       <div class="toolbar">
         <div>
           <el-input v-model="keyword" placeholder="搜索标题" class="search-input" clearable @change="fetchData" />
         </div>
-        <el-button v-if="userStore.role==='admin' || userStore.role==='manager'" type="primary" @click="openDialog()">创建任务</el-button>
+        <el-button v-if="userStore.role==='管理员' || userStore.role==='部门经理'" type="primary" @click="openDialog()">创建任务</el-button>
       </div>
       <el-table :data="records" stripe>
         <el-table-column prop="id" label="ID" width="80" />
@@ -23,7 +23,7 @@
         <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
-            <template v-if="userStore.role==='admin' || userStore.role==='manager'">
+            <template v-if="userStore.role==='管理员' || userStore.role==='部门经理'">
               <el-button size="small" @click="openDialog(row)">编辑</el-button>
               <el-button size="small" @click="handleComplete(row)">完成</el-button>
             </template>

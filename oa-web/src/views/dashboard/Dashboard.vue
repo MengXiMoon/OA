@@ -28,7 +28,7 @@ import { Bell, List, DocumentChecked, Calendar } from '@element-plus/icons-vue'
 const userStore = useUserStore()
 
 const roleName = computed(() => {
-  const map = { admin: '管理员', manager: '部门经理', employee: '普通员工' }
+  const map = { admin: '管理员', manager: '部门经理', employee: '普通员工', '管理员': '管理员', '部门经理': '部门经理', '普通员工': '普通员工' }
   return map[userStore.role] || ''
 })
 

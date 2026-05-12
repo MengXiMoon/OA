@@ -3,7 +3,7 @@
     <el-card>
       <div class="toolbar">
         <el-input v-model="keyword" placeholder="搜索项目名称" class="search-input" clearable @change="fetchData" />
-        <el-button v-if="userStore.role==='admin'" type="primary" @click="openDialog()">发布项目进展</el-button>
+        <el-button v-if="userStore.role==='管理员'" type="primary" @click="openDialog()">发布项目进展</el-button>
       </div>
       <el-table :data="records" stripe>
         <el-table-column prop="id" label="ID" width="80" />
@@ -17,7 +17,7 @@
         <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
-            <template v-if="userStore.role==='admin'">
+            <template v-if="userStore.role==='管理员'">
               <el-button size="small" @click="openDialog(row)">编辑</el-button>
               <el-button size="small" type="danger" @click="handleDelete(row.id)">删除</el-button>
             </template>

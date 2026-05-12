@@ -27,14 +27,14 @@ public class NoticeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> create(@RequestBody OaNotice notice) {
         noticeService.publish(notice);
         return Result.success();
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> update(@PathVariable Long id, @RequestBody OaNotice notice) {
         notice.setId(id);
         noticeService.updateById(notice);
@@ -42,7 +42,7 @@ public class NoticeController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('管理员')")
     public Result<Void> delete(@PathVariable Long id) {
         noticeService.removeById(id);
         return Result.success();

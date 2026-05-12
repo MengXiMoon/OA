@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <el-tabs v-if="userStore.role==='admin'" v-model="activeTab" @tab-change="fetchData">
+      <el-tabs v-if="userStore.role==='管理员'" v-model="activeTab" @tab-change="fetchData">
         <el-tab-pane label="我的考勤" name="my" />
         <el-tab-pane label="全部考勤" name="all" />
       </el-tabs>

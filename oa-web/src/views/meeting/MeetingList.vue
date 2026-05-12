@@ -5,7 +5,7 @@
         <div>
           <el-input v-model="keyword" placeholder="搜索标题" class="search-input" clearable @change="fetchData" />
         </div>
-        <el-button v-if="userStore.role==='admin' || userStore.role==='manager'" type="primary" @click="openDialog()">预约会议</el-button>
+        <el-button v-if="userStore.role==='管理员' || userStore.role==='部门经理'" type="primary" @click="openDialog()">预约会议</el-button>
       </div>
       <el-table :data="records" stripe>
         <el-table-column prop="id" label="ID" width="80" />
@@ -21,7 +21,7 @@
         <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
-            <template v-if="userStore.role==='admin' || userStore.role==='manager'">
+            <template v-if="userStore.role==='管理员' || userStore.role==='部门经理'">
               <el-button size="small" @click="openDialog(row)">编辑</el-button>
               <el-button size="small" type="danger" @click="handleDelete(row.id)">取消</el-button>
             </template>

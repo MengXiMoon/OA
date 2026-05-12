@@ -21,7 +21,7 @@
         <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
-            <template v-if="userStore.role==='admin' || userStore.role==='manager'">
+            <template v-if="userStore.role==='管理员' || userStore.role==='部门经理'">
               <el-button v-if="row.status==='待审批'" size="small" type="success" @click="handleApprove(row.id, '已批准')">批准</el-button>
               <el-button v-if="row.status==='待审批'" size="small" type="danger" @click="handleApprove(row.id, '已拒绝')">拒绝</el-button>
             </template>
