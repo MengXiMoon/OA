@@ -6,10 +6,12 @@
         <el-button v-if="userStore.role==='admin'" type="primary" @click="openDialog()">发布公告</el-button>
       </div>
       <el-table :data="records" stripe>
-        <el-table-column prop="id" label="ID" width="80" />
-        <el-table-column prop="title" label="标题" />
-        <el-table-column prop="createTime" label="发布时间" width="180" />
-        <el-table-column label="操作" width="200">
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="title" label="标题" min-width="200" show-overflow-tooltip />
+        <el-table-column label="发布时间" width="170">
+          <template #default="{row}">{{ formatTime(row.createTime) }}</template>
+        </el-table-column>
+        <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
             <template v-if="userStore.role==='admin'">
@@ -23,10 +25,10 @@
                      @current-change="fetchData" layout="total, prev, pager, next" />
     </el-card>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit?'编辑公告':'发布公告'" width="600px">
+    <el-dialog v-model="dialogVisible" :title="isEdit?'编辑公告':'发布公告'" width="500px">
       <el-form :model="form">
         <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
-        <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
+        <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="5" /></el-form-item>
         <el-form-item label="置顶"><el-switch v-model="form.isTop" :active-value="1" :inactive-value="0" /></el-form-item>
       </el-form>
       <template #footer>
@@ -35,7 +37,7 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="detailVisible" title="公告详情" width="600px">
+    <el-dialog v-model="detailVisible" title="公告详情" width="500px">
       <h2>{{ detail.title }}</h2>
       <el-divider />
       <div>{{ detail.content }}</div>
@@ -60,6 +62,11 @@ const isEdit = ref(false)
 const detail = ref({})
 const form = reactive({ title: '', content: '', isTop: 0 })
 let editId = null
+
+function formatTime(t) {
+  if (!t) return ''
+  return t.replace('T', ' ').substring(0, 19)
+}
 
 async function fetchData() {
   const res = await getNotices({ page: page.value, pageSize: 10, keyword: keyword.value })
