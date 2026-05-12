@@ -36,9 +36,9 @@
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑任务':'创建任务'" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
-        <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="4" /></el-form-item>
-        <el-form-item label="截止日期"><el-date-picker v-model="form.deadline" type="date" value-format="YYYY-MM-DD" /></el-form-item>
+        <el-form-item label="标题" prop="title"><el-input v-model="form.title" /></el-form-item>
+        <el-form-item label="内容" prop="content"><el-input v-model="form.content" type="textarea" :rows="4" /></el-form-item>
+        <el-form-item label="截止日期" prop="deadline"><el-date-picker v-model="form.deadline" type="date" value-format="YYYY-MM-DD" /></el-form-item>
         <el-form-item label="优先级">
           <el-select v-model="form.priority">
             <el-option label="高" value="高" />
@@ -53,7 +53,7 @@
             <el-option label="已完成" value="已完成" />
           </el-select>
         </el-form-item>
-        <el-form-item label="分配给"><el-input v-model="form.assigneeId" placeholder="用户ID" /></el-form-item>
+        <el-form-item label="分配给" prop="assigneeId"><el-input v-model="form.assigneeId" placeholder="用户ID" /></el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible=false">取消</el-button>

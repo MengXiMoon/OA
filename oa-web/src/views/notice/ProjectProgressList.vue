@@ -30,8 +30,8 @@
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑项目进展':'发布项目进展'" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="项目名称"><el-input v-model="form.projectName" /></el-form-item>
-        <el-form-item label="进展内容"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
+        <el-form-item label="项目名称" prop="projectName"><el-input v-model="form.projectName" /></el-form-item>
+        <el-form-item label="进展内容" prop="content"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
         <el-form-item label="进度">
           <el-input-number v-model="form.progressPercent" :min="0" :max="100" style="width:100%" />
         </el-form-item>

@@ -29,7 +29,7 @@
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑日志':'写日志'" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="日期"><el-date-picker v-model="form.logDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
-        <el-form-item label="今日工作"><el-input v-model="form.todayContent" type="textarea" :rows="5" /></el-form-item>
+        <el-form-item label="今日工作" prop="todayContent"><el-input v-model="form.todayContent" type="textarea" :rows="5" /></el-form-item>
         <el-form-item label="明日计划"><el-input v-model="form.tomorrowPlan" type="textarea" :rows="3" /></el-form-item>
       </el-form>
       <template #footer>

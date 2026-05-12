@@ -32,11 +32,11 @@
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑归档':'新增归档'" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="文号"><el-input v-model="form.fileNo" /></el-form-item>
-        <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
-        <el-form-item label="文件类型"><el-input v-model="form.fileType" /></el-form-item>
+        <el-form-item label="文号" prop="fileNo"><el-input v-model="form.fileNo" /></el-form-item>
+        <el-form-item label="标题" prop="title"><el-input v-model="form.title" /></el-form-item>
+        <el-form-item label="文件类型" prop="fileType"><el-input v-model="form.fileType" /></el-form-item>
         <el-form-item label="关键词"><el-input v-model="form.keywords" /></el-form-item>
-        <el-form-item label="归档日期"><el-date-picker v-model="form.archiveDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
+        <el-form-item label="归档日期" prop="archiveDate"><el-date-picker v-model="form.archiveDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible=false">取消</el-button>

@@ -34,7 +34,7 @@
 
     <el-dialog v-model="dialogVisible" title="申请请假" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="请假类型">
+        <el-form-item label="请假类型" prop="leaveType">
           <el-select v-model="form.leaveType">
             <el-option label="事假" value="事假" />
             <el-option label="病假" value="病假" />
@@ -44,9 +44,9 @@
             <el-option label="丧假" value="丧假" />
           </el-select>
         </el-form-item>
-        <el-form-item label="原因"><el-input v-model="form.reason" type="textarea" :rows="4" /></el-form-item>
-        <el-form-item label="开始时间"><el-date-picker v-model="form.startTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
-        <el-form-item label="结束时间"><el-date-picker v-model="form.endTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
+        <el-form-item label="原因" prop="reason"><el-input v-model="form.reason" type="textarea" :rows="4" /></el-form-item>
+        <el-form-item label="开始时间" prop="startTime"><el-date-picker v-model="form.startTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
+        <el-form-item label="结束时间" prop="endTime"><el-date-picker v-model="form.endTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible=false">取消</el-button>

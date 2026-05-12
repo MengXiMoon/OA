@@ -33,12 +33,12 @@
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑收文':'新增收文'" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="文号"><el-input v-model="form.fileNo" /></el-form-item>
-        <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
-        <el-form-item label="来文单位"><el-input v-model="form.sendOrg" /></el-form-item>
-        <el-form-item label="收文日期"><el-date-picker v-model="form.receiveDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
-        <el-form-item label="文件类型"><el-input v-model="form.fileType" /></el-form-item>
-        <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
+        <el-form-item label="文号" prop="fileNo"><el-input v-model="form.fileNo" /></el-form-item>
+        <el-form-item label="标题" prop="title"><el-input v-model="form.title" /></el-form-item>
+        <el-form-item label="来文单位" prop="sendOrg"><el-input v-model="form.sendOrg" /></el-form-item>
+        <el-form-item label="收文日期" prop="receiveDate"><el-date-picker v-model="form.receiveDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
+        <el-form-item label="文件类型" prop="fileType"><el-input v-model="form.fileType" /></el-form-item>
+        <el-form-item label="内容" prop="content"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
         <el-form-item label="状态">
           <el-select v-model="form.status">
             <el-option label="待处理" value="待处理" />

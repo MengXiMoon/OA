@@ -34,10 +34,10 @@
 
     <el-dialog v-model="dialogVisible" title="申请出差" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="目的地"><el-input v-model="form.destination" /></el-form-item>
-        <el-form-item label="原因"><el-input v-model="form.reason" type="textarea" :rows="4" /></el-form-item>
-        <el-form-item label="开始时间"><el-date-picker v-model="form.startTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
-        <el-form-item label="结束时间"><el-date-picker v-model="form.endTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
+        <el-form-item label="目的地" prop="destination"><el-input v-model="form.destination" /></el-form-item>
+        <el-form-item label="原因" prop="reason"><el-input v-model="form.reason" type="textarea" :rows="4" /></el-form-item>
+        <el-form-item label="开始时间" prop="startTime"><el-date-picker v-model="form.startTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
+        <el-form-item label="结束时间" prop="endTime"><el-date-picker v-model="form.endTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible=false">取消</el-button>

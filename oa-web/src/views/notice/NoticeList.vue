@@ -27,8 +27,8 @@
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑公告':'发布公告'" width="500px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
-        <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="5" /></el-form-item>
+        <el-form-item label="标题" prop="title"><el-input v-model="form.title" /></el-form-item>
+        <el-form-item label="内容" prop="content"><el-input v-model="form.content" type="textarea" :rows="5" /></el-form-item>
         <el-form-item label="置顶"><el-switch v-model="form.isTop" :active-value="1" :inactive-value="0" /></el-form-item>
       </el-form>
       <template #footer>

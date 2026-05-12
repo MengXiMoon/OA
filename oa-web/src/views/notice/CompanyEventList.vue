@@ -29,10 +29,10 @@
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑公司事件':'发布公司事件'" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
-        <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
-        <el-form-item label="事件日期"><el-date-picker v-model="form.eventDate" type="date" placeholder="选择日期" value-format="YYYY-MM-DD" /></el-form-item>
-        <el-form-item label="地点"><el-input v-model="form.location" /></el-form-item>
+        <el-form-item label="标题" prop="title"><el-input v-model="form.title" /></el-form-item>
+        <el-form-item label="内容" prop="content"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
+        <el-form-item label="事件日期" prop="eventDate"><el-date-picker v-model="form.eventDate" type="date" placeholder="选择日期" value-format="YYYY-MM-DD" /></el-form-item>
+        <el-form-item label="地点" prop="location"><el-input v-model="form.location" /></el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible=false">取消</el-button>

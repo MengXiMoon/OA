@@ -28,8 +28,8 @@
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑周报':'发布周报'" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
-        <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
+        <el-form-item label="标题" prop="title"><el-input v-model="form.title" /></el-form-item>
+        <el-form-item label="内容" prop="content"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
         <el-form-item label="报告周"><el-input v-model="form.reportWeek" placeholder="如：2026-W19" /></el-form-item>
       </el-form>
       <template #footer>

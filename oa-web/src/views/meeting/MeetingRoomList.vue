@@ -28,9 +28,9 @@
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑会议室':'新增会议室'" width="600px">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item label="名称"><el-input v-model="form.name" /></el-form-item>
-        <el-form-item label="位置"><el-input v-model="form.location" /></el-form-item>
-        <el-form-item label="容量"><el-input-number v-model="form.capacity" :min="1" /></el-form-item>
+        <el-form-item label="名称" prop="name"><el-input v-model="form.name" /></el-form-item>
+        <el-form-item label="位置" prop="location"><el-input v-model="form.location" /></el-form-item>
+        <el-form-item label="容量" prop="capacity"><el-input-number v-model="form.capacity" :min="1" /></el-form-item>
         <el-form-item label="投影仪">
           <el-select v-model="form.hasProjector">
             <el-option label="有" :value="1" />
