@@ -108,18 +108,21 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
   --el-table-tr-bg-color: var(--bg-surface);
   table-layout: fixed;
 }
-.el-table .el-table__cell {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: middle;
-  line-height: 1.5;
-}
 .el-table th.el-table__cell {
   background: var(--bg-secondary);
   color: var(--text-secondary);
   font-size: 12px;
   font-weight: 500;
+  padding: 10px 12px;
+}
+.el-table .el-table__cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.el-table td.el-table__cell {
+  padding: 8px 12px;
 }
 .el-table--border .el-table__cell { border-right: none; }
 .el-table--border { border-left: none; border-right: none; }
