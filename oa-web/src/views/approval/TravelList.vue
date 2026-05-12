@@ -22,8 +22,8 @@
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
             <template v-if="userStore.role==='admin' || userStore.role==='manager'">
-              <el-button v-if="row.status==='待审批'" size="small" type="success" @click="handleApprove(row.id, 'approved')">批准</el-button>
-              <el-button v-if="row.status==='待审批'" size="small" type="danger" @click="handleApprove(row.id, 'rejected')">拒绝</el-button>
+              <el-button v-if="row.status==='待审批'" size="small" type="success" @click="handleApprove(row.id, '已批准')">批准</el-button>
+              <el-button v-if="row.status==='待审批'" size="small" type="danger" @click="handleApprove(row.id, '已拒绝')">拒绝</el-button>
             </template>
           </template>
         </el-table-column>
@@ -94,7 +94,7 @@ async function handleSave() {
 }
 
 async function handleApprove(id, status) {
-  const label = status === 'approved' ? '批准' : '拒绝'
+  const label = status === '已批准' ? '批准' : '拒绝'
   await ElMessageBox.confirm(`确定${label}？`, '提示', { type: 'warning' })
   await approveTravel(id, status)
   ElMessage.success(`已${label}`)
