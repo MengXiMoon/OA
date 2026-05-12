@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="welcome-card">
-      <h3 class="welcome-title">工作台</h3>
-      <p class="welcome-text">当前角色：{{ roleName }}。从这里开始你的一天，所有模块均可从左侧导航栏访问。</p>
+      <h3 class="welcome-title">OA 启动成功</h3>
+      <p class="welcome-text">当前角色：{{ roleName }}。陶瓷素白主题已就绪，所有模块均可从左侧导航栏访问。</p>
     </div>
   </div>
 </template>
