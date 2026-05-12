@@ -348,6 +348,16 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
 .el-descriptions__label { font-size: 12px; color: var(--text-secondary); }
 .el-descriptions__content { font-size: 13px; color: var(--text-primary); }
 
+/* ===== Tooltip ===== */
+
+.el-tooltip__popper.is-dark {
+  background: #1f1f1f;
+  color: #fff;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+
 /* ===== Dropdown / Tag ===== */
 
 .el-dropdown-menu {
