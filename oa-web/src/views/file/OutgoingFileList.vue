@@ -12,10 +12,12 @@
         <el-table-column prop="fileNo" label="文号" width="160" />
         <el-table-column prop="title" label="标题" />
         <el-table-column prop="sendToOrg" label="发往单位" width="160" />
-        <el-table-column prop="sendDate" label="发文日期" width="120" />
+        <el-table-column label="发文日期" width="170">
+          <template #default="{row}">{{ formatTime(row.sendDate) }}</template>
+        </el-table-column>
         <el-table-column prop="fileType" label="文件类型" width="100" />
         <el-table-column prop="status" label="状态" width="100" />
-        <el-table-column label="操作" width="240">
+        <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
             <template v-if="userStore.role==='admin' || userStore.role==='manager'">
@@ -82,6 +84,8 @@ const isEdit = ref(false)
 const detail = ref({})
 const form = reactive({ fileNo: '', title: '', sendToOrg: '', sendDate: '', fileType: '', content: '', status: '草稿' })
 let editId = null
+
+function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
 async function fetchData() {
   const res = await getOutgoingFiles({ page: page.value, pageSize: 10, keyword: keyword.value })

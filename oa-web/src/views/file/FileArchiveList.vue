@@ -13,8 +13,10 @@
         <el-table-column prop="title" label="标题" />
         <el-table-column prop="fileType" label="文件类型" width="120" />
         <el-table-column prop="keywords" label="关键词" width="150" />
-        <el-table-column prop="archiveDate" label="归档日期" width="120" />
-        <el-table-column label="操作" width="200">
+        <el-table-column label="归档日期" width="170">
+          <template #default="{row}">{{ formatTime(row.archiveDate) }}</template>
+        </el-table-column>
+        <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
             <template v-if="userStore.role==='admin' || userStore.role==='manager'">
@@ -71,6 +73,8 @@ const isEdit = ref(false)
 const detail = ref({})
 const form = reactive({ fileNo: '', title: '', fileType: '', keywords: '', archiveDate: '' })
 let editId = null
+
+function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
 async function fetchData() {
   const res = await getFileArchives({ page: page.value, pageSize: 10, keyword: keyword.value })
