@@ -27,6 +27,13 @@ public class OaLeaveService extends ServiceImpl<OaLeaveMapper, OaLeave> {
         return new PageResult<>(page.getRecords(), page.getTotal(), page.getCurrent(), page.getSize());
     }
 
+    @Override
+    public boolean save(OaLeave leave) {
+        leave.setApplicantId(SecurityUtils.getCurrentUserId());
+        leave.setStatus("pending");
+        return super.save(leave);
+    }
+
     public void approve(Long id, String status) {
         OaLeave leave = getById(id);
         leave.setStatus(status);

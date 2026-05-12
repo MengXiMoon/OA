@@ -27,6 +27,13 @@ public class OaTravelService extends ServiceImpl<OaTravelMapper, OaTravel> {
         return new PageResult<>(page.getRecords(), page.getTotal(), page.getCurrent(), page.getSize());
     }
 
+    @Override
+    public boolean save(OaTravel travel) {
+        travel.setApplicantId(SecurityUtils.getCurrentUserId());
+        travel.setStatus("pending");
+        return super.save(travel);
+    }
+
     public void approve(Long id, String status) {
         OaTravel travel = getById(id);
         travel.setStatus(status);
