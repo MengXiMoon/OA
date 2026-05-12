@@ -316,12 +316,14 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
 
 /* ===== Menu ===== */
 
-.el-menu { border-right: none !important; background: transparent; }
+.el-menu { border-right: none !important; background: transparent; padding-left: 0 !important; }
+.el-menu--vertical { padding-left: 0; }
 .el-menu-item,
 .el-sub-menu__title {
   height: 36px;
   line-height: 36px;
-  margin: 2px 8px;
+  margin: 2px 4px;
+  padding-left: 12px !important;
   border-radius: var(--radius-md);
   font-size: 13px;
   color: var(--text-primary);
@@ -336,7 +338,7 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
 }
 .el-sub-menu .el-menu { background: transparent; }
 .el-sub-menu .el-menu-item {
-  padding-left: 52px !important;
+  padding-left: 36px !important;
   height: 32px;
   line-height: 32px;
 }
