@@ -19,7 +19,9 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="180" />
+        <el-table-column label="创建时间" width="170">
+          <template #default="{row}">{{ formatTime(row.createTime) }}</template>
+        </el-table-column>
       </el-table>
       <el-pagination v-model:current-page="page" :total="total" :page-size="10"
                      @current-change="fetchData" layout="total, prev, pager, next" />
@@ -41,6 +43,11 @@ async function fetchData() {
   const res = await getUsers({ page: page.value, pageSize: 10, keyword: keyword.value })
   records.value = res.data.records
   total.value = res.data.total
+}
+
+function formatTime(t) {
+  if (!t) return ''
+  return t.replace('T', ' ').substring(0, 19)
 }
 
 async function handleRoleChange(row) {
