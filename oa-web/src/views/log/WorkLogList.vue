@@ -10,10 +10,12 @@
       </div>
       <el-table :data="records" stripe>
         <el-table-column prop="id" label="ID" width="80" />
-        <el-table-column prop="logDate" label="日期" width="120" />
+        <el-table-column label="日期" width="170">
+          <template #default="{row}">{{ formatTime(row.logDate) }}</template>
+        </el-table-column>
         <el-table-column prop="todayContent" label="今日工作" show-overflow-tooltip />
         <el-table-column prop="tomorrowPlan" label="明日计划" show-overflow-tooltip />
-        <el-table-column label="操作" width="160">
+        <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="openDialog(row)">编辑</el-button>
             <el-button size="small" @click="showDetail(row)">查看</el-button>
@@ -62,6 +64,8 @@ const isEdit = ref(false)
 const detail = ref({})
 const form = reactive({ logDate: '', todayContent: '', tomorrowPlan: '' })
 let editId = null
+
+function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
 async function fetchData() {
   const res = await getWorkLogs({ page: page.value, pageSize: 10, keyword: keyword.value, date: filterDate.value })

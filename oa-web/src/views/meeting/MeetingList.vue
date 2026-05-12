@@ -11,10 +11,14 @@
         <el-table-column prop="id" label="ID" width="80" />
         <el-table-column prop="title" label="标题" />
         <el-table-column prop="roomId" label="会议室ID" width="100" />
-        <el-table-column prop="startTime" label="开始时间" width="160" />
-        <el-table-column prop="endTime" label="结束时间" width="160" />
+        <el-table-column label="开始时间" width="170">
+          <template #default="{row}">{{ formatTime(row.startTime) }}</template>
+        </el-table-column>
+        <el-table-column label="结束时间" width="170">
+          <template #default="{row}">{{ formatTime(row.endTime) }}</template>
+        </el-table-column>
         <el-table-column prop="status" label="状态" width="100" />
-        <el-table-column label="操作" width="240">
+        <el-table-column label="操作" width="220">
           <template #default="{row}">
             <el-button size="small" @click="showDetail(row)">查看</el-button>
             <template v-if="userStore.role==='admin' || userStore.role==='manager'">
@@ -80,6 +84,8 @@ const isEdit = ref(false)
 const detail = ref({})
 const form = reactive({ title: '', roomId: 1, startTime: '', endTime: '', content: '', status: '预约中' })
 let editId = null
+
+function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
 async function fetchData() {
   const res = await getMeetings({ page: page.value, pageSize: 10, keyword: keyword.value })
