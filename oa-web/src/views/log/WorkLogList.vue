@@ -27,7 +27,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑日志':'写日志'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="日期"><el-date-picker v-model="form.logDate" type="date" value-format="YYYY-MM-DD" /></el-form-item>
         <el-form-item label="今日工作"><el-input v-model="form.todayContent" type="textarea" :rows="5" /></el-form-item>
         <el-form-item label="明日计划"><el-input v-model="form.tomorrowPlan" type="textarea" :rows="3" /></el-form-item>
@@ -62,8 +62,13 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ logDate: '', todayContent: '', tomorrowPlan: '' })
 let editId = null
+
+const rules = {
+  todayContent: [{ required: true, message: '请输入今日工作内容', trigger: 'blur' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
@@ -85,6 +90,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateWorkLog(editId, form) }
   else { await createWorkLog(form) }
   dialogVisible.value = false

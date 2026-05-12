@@ -27,7 +27,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑会议室':'新增会议室'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="名称"><el-input v-model="form.name" /></el-form-item>
         <el-form-item label="位置"><el-input v-model="form.location" /></el-form-item>
         <el-form-item label="容量"><el-input-number v-model="form.capacity" :min="1" /></el-form-item>
@@ -76,8 +76,15 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ name: '', location: '', capacity: 10, hasProjector: 0, status: '可用' })
 let editId = null
+
+const rules = {
+  name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+  location: [{ required: true, message: '请输入位置', trigger: 'blur' }],
+  capacity: [{ required: true, message: '请输入容量', trigger: 'blur' }],
+}
 
 async function fetchData() {
   const res = await getMeetingRooms()
@@ -97,6 +104,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateMeetingRoom(editId, form) }
   else { await createMeetingRoom(form) }
   dialogVisible.value = false

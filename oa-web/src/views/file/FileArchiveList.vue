@@ -31,7 +31,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑归档':'新增归档'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="文号"><el-input v-model="form.fileNo" /></el-form-item>
         <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
         <el-form-item label="文件类型"><el-input v-model="form.fileType" /></el-form-item>
@@ -71,8 +71,16 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ fileNo: '', title: '', fileType: '', keywords: '', archiveDate: '' })
 let editId = null
+
+const rules = {
+  fileNo: [{ required: true, message: '请输入文号', trigger: 'blur' }],
+  title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  fileType: [{ required: true, message: '请输入文件类型', trigger: 'blur' }],
+  archiveDate: [{ required: true, message: '请选择归档日期', trigger: 'change' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
@@ -95,6 +103,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateFileArchive(editId, form) }
   else { await createFileArchive(form) }
   dialogVisible.value = false

@@ -32,7 +32,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑发文':'新增发文'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="文号"><el-input v-model="form.fileNo" /></el-form-item>
         <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
         <el-form-item label="发往单位"><el-input v-model="form.sendToOrg" /></el-form-item>
@@ -82,8 +82,18 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ fileNo: '', title: '', sendToOrg: '', sendDate: '', fileType: '', content: '', status: '草稿' })
 let editId = null
+
+const rules = {
+  fileNo: [{ required: true, message: '请输入文号', trigger: 'blur' }],
+  title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  sendToOrg: [{ required: true, message: '请输入发往单位', trigger: 'blur' }],
+  sendDate: [{ required: true, message: '请选择发文日期', trigger: 'change' }],
+  fileType: [{ required: true, message: '请输入文件类型', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
@@ -107,6 +117,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateOutgoingFile(editId, form) }
   else { await createOutgoingFile(form) }
   dialogVisible.value = false

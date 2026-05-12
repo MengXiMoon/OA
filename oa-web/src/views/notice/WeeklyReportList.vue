@@ -27,7 +27,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑周报':'发布周报'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
         <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
         <el-form-item label="报告周"><el-input v-model="form.reportWeek" placeholder="如：2026-W19" /></el-form-item>
@@ -62,8 +62,14 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ title: '', content: '', reportWeek: '' })
 let editId = null
+
+const rules = {
+  title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 async function fetchData() {
@@ -84,6 +90,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateWeeklyReport(editId, form) }
   else { await createWeeklyReport(form) }
   dialogVisible.value = false

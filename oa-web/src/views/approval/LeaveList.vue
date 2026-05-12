@@ -33,7 +33,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" title="申请请假" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="请假类型">
           <el-select v-model="form.leaveType">
             <el-option label="事假" value="事假" />
@@ -80,7 +80,15 @@ const keyword = ref('')
 const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ leaveType: '事假', reason: '', startTime: '', endTime: '' })
+
+const rules = {
+  leaveType: [{ required: true, message: '请选择请假类型', trigger: 'change' }],
+  reason: [{ required: true, message: '请输入原因', trigger: 'blur' }],
+  startTime: [{ required: true, message: '请选择开始时间', trigger: 'change' }],
+  endTime: [{ required: true, message: '请选择结束时间', trigger: 'change' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
@@ -96,6 +104,8 @@ function openDialog() {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   await applyLeave(form)
   dialogVisible.value = false
   ElMessage.success('申请已提交')

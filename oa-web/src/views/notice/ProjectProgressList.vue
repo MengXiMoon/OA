@@ -29,7 +29,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑项目进展':'发布项目进展'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="项目名称"><el-input v-model="form.projectName" /></el-form-item>
         <el-form-item label="进展内容"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
         <el-form-item label="进度">
@@ -67,8 +67,14 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ projectName: '', content: '', progressPercent: 0, status: '' })
 let editId = null
+
+const rules = {
+  projectName: [{ required: true, message: '请输入项目名称', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入进展内容', trigger: 'blur' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 async function fetchData() {
@@ -90,6 +96,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateProjectProgress(editId, form) }
   else { await createProjectProgress(form) }
   dialogVisible.value = false

@@ -33,7 +33,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" title="申请出差" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="目的地"><el-input v-model="form.destination" /></el-form-item>
         <el-form-item label="原因"><el-input v-model="form.reason" type="textarea" :rows="4" /></el-form-item>
         <el-form-item label="开始时间"><el-date-picker v-model="form.startTime" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" /></el-form-item>
@@ -71,7 +71,15 @@ const keyword = ref('')
 const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ destination: '', reason: '', startTime: '', endTime: '' })
+
+const rules = {
+  destination: [{ required: true, message: '请输入目的地', trigger: 'blur' }],
+  reason: [{ required: true, message: '请输入原因', trigger: 'blur' }],
+  startTime: [{ required: true, message: '请选择开始时间', trigger: 'change' }],
+  endTime: [{ required: true, message: '请选择结束时间', trigger: 'change' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
@@ -87,6 +95,8 @@ function openDialog() {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   await applyTravel(form)
   dialogVisible.value = false
   ElMessage.success('申请已提交')

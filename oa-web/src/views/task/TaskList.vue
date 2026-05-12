@@ -35,7 +35,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑任务':'创建任务'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
         <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="4" /></el-form-item>
         <el-form-item label="截止日期"><el-date-picker v-model="form.deadline" type="date" value-format="YYYY-MM-DD" /></el-form-item>
@@ -89,8 +89,16 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ title: '', content: '', deadline: '', priority: '中', status: '待处理', assigneeId: '' })
 let editId = null
+
+const rules = {
+  title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  deadline: [{ required: true, message: '请选择截止日期', trigger: 'change' }],
+  assigneeId: [{ required: true, message: '请输入负责人ID', trigger: 'blur' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
@@ -114,6 +122,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateTask(editId, form) }
   else { await createTask(form) }
   dialogVisible.value = false

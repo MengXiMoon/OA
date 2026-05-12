@@ -33,7 +33,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑会议':'预约会议'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
         <el-form-item label="会议室ID"><el-input-number v-model="form.roomId" :min="1" /></el-form-item>
         <el-form-item label="开始时间"><el-date-picker v-model="form.startTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" /></el-form-item>
@@ -82,8 +82,16 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ title: '', roomId: 1, startTime: '', endTime: '', content: '', status: '预约中' })
 let editId = null
+
+const rules = {
+  title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  roomId: [{ required: true, message: '请选择会议室', trigger: 'change' }],
+  startTime: [{ required: true, message: '请选择开始时间', trigger: 'change' }],
+  endTime: [{ required: true, message: '请选择结束时间', trigger: 'change' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
@@ -106,6 +114,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateMeeting(editId, form) }
   else { await createMeeting(form) }
   dialogVisible.value = false

@@ -28,7 +28,7 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="isEdit?'编辑公司事件':'发布公司事件'" width="600px">
-      <el-form :model="form">
+      <el-form ref="formRef" :model="form" :rules="rules">
         <el-form-item label="标题"><el-input v-model="form.title" /></el-form-item>
         <el-form-item label="内容"><el-input v-model="form.content" type="textarea" :rows="6" /></el-form-item>
         <el-form-item label="事件日期"><el-date-picker v-model="form.eventDate" type="date" placeholder="选择日期" value-format="YYYY-MM-DD" /></el-form-item>
@@ -64,8 +64,16 @@ const dialogVisible = ref(false)
 const detailVisible = ref(false)
 const isEdit = ref(false)
 const detail = ref({})
+const formRef = ref(null)
 const form = reactive({ title: '', content: '', eventDate: '', location: '' })
 let editId = null
+
+const rules = {
+  title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  eventDate: [{ required: true, message: '请选择事件日期', trigger: 'change' }],
+  location: [{ required: true, message: '请输入地点', trigger: 'blur' }],
+}
 
 function formatTime(t) { return t ? t.replace('T', ' ').substring(0, 19) : '' }
 
@@ -87,6 +95,8 @@ function openDialog(row) {
 }
 
 async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   if (isEdit.value) { await updateCompanyEvent(editId, form) }
   else { await createCompanyEvent(form) }
   dialogVisible.value = false
