@@ -106,31 +106,6 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
   --el-table-row-hover-bg-color: rgba(0,0,0,0.02);
   --el-table-current-row-bg-color: rgba(0,0,0,0.04);
   --el-table-tr-bg-color: var(--bg-surface);
-  border: 0.5px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-}
-.el-table th.el-table__cell {
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 500;
-  height: 36px;
-  border-bottom: 0.5px solid var(--border-color);
-}
-.el-table td.el-table__cell {
-  border-bottom: 0.5px solid var(--border-light);
-  padding: 8px 12px;
-  vertical-align: middle;
-}
-.el-table .el-select {
-  vertical-align: middle;
-}
-.el-table .el-button--small {
-  vertical-align: middle;
-}
-.el-table--striped .el-table__body tr.el-table__row--striped td {
-  background: var(--bg-surface);
 }
 .el-table--border .el-table__cell { border-right: none; }
 .el-table--border { border-left: none; border-right: none; }
