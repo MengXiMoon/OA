@@ -121,6 +121,13 @@ body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
 .el-table td.el-table__cell {
   border-bottom: 0.5px solid var(--border-light);
   padding: 10px 16px;
+  vertical-align: middle;
+}
+.el-table .el-select {
+  vertical-align: middle;
+}
+.el-table .el-button--small {
+  vertical-align: middle;
 }
 .el-table--striped .el-table__body tr.el-table__row--striped td {
   background: var(--bg-surface);
