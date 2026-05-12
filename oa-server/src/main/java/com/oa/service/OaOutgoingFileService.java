@@ -18,9 +18,6 @@ public class OaOutgoingFileService extends ServiceImpl<OaOutgoingFileMapper, OaO
     public PageResult<OaOutgoingFile> pageQuery(PageQuery query) {
         String role = SecurityUtils.getCurrentRole();
         LambdaQueryWrapper<OaOutgoingFile> wrapper = new LambdaQueryWrapper<>();
-        if ("employee".equals(role)) {
-            throw new BusinessException(403, "无权访问");
-        }
         if (StringUtils.hasText(query.getKeyword())) {
             wrapper.and(w -> w.like(OaOutgoingFile::getTitle, query.getKeyword())
                     .or().like(OaOutgoingFile::getFileNo, query.getKeyword()));
