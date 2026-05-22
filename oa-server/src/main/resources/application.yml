@@ -51,7 +51,7 @@ jwt:
 
 # AI 大模型配置（通义千问 DashScope）
 ai:
-  endpoint: https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation
+  endpoint: https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions
   api-key: sk-d7dc3775ac09492cb8ad6776b911ca1f
   model: qwen3.5-122b-a10b
-  timeout: 30
+  timeout: 60

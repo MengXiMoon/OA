@@ -76,14 +76,12 @@ public class AIService {
         try {
             Map<String, Object> body = Map.of(
                     "model", aiConfig.getModel(),
-                    "input", Map.of("messages", List.of(
+                    "messages", List.of(
                             Map.of("role", "system", "content", "你是一个专业的办公助手，回答简洁准确。"),
                             Map.of("role", "user", "content", prompt)
-                    )),
-                    "parameters", Map.of(
-                            "max_tokens", 500,
-                            "temperature", 0.7
-                    )
+                    ),
+                    "max_tokens", 500,
+                    "temperature", 0.7
             );
 
             String json = objectMapper.writeValueAsString(body);
@@ -98,10 +96,9 @@ public class AIService {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                DashScopeResponse dr = objectMapper.readValue(response.body(), DashScopeResponse.class);
-                if (dr.getOutput() != null && dr.getOutput().getChoices() != null
-                        && !dr.getOutput().getChoices().isEmpty()) {
-                    return dr.getOutput().getChoices().get(0).getMessage().getContent();
+                ChatResponse cr = objectMapper.readValue(response.body(), ChatResponse.class);
+                if (cr.getChoices() != null && !cr.getChoices().isEmpty()) {
+                    return cr.getChoices().get(0).getMessage().getContent();
                 }
             }
             return "AI 调用失败，状态码：" + response.statusCode() + "，响应：" + response.body().substring(0, Math.min(200, response.body().length()));
@@ -112,25 +109,17 @@ public class AIService {
     }
 
     @Data
-    public static class DashScopeResponse {
-        private Output output;
-
-        @Data
-        public static class Output {
-            private List<Choice> choices;
-        }
+    public static class ChatResponse {
+        private List<Choice> choices;
 
         @Data
         public static class Choice {
-            @JsonProperty("finish_reason")
-            private String finishReason;
             private Message message;
         }
 
         @Data
         public static class Message {
             private String content;
-            private String role;
         }
     }
 }
