@@ -1,19 +1,25 @@
 package com.oa.config;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-@Data
 @Configuration
-@ConfigurationProperties(prefix = "ai")
 public class AIConfig {
-    /** LLM API 地址（如 DeepSeek / 通义千问 / OpenAI 兼容接口） */
-    private String endpoint = "https://api.deepseek.com/v1/chat/completions";
-    /** API Key */
-    private String apiKey = "";
-    /** 模型名称 */
-    private String model = "deepseek-chat";
-    /** 超时秒数 */
-    private int timeout = 30;
+
+    @Value("${ai.endpoint:https://api.deepseek.com/v1/chat/completions}")
+    private String endpoint;
+
+    @Value("${ai.api-key:}")
+    private String apiKey;
+
+    @Value("${ai.model:deepseek-chat}")
+    private String model;
+
+    @Value("${ai.timeout:30}")
+    private int timeout;
+
+    public String getEndpoint() { return endpoint; }
+    public String getApiKey() { return apiKey; }
+    public String getModel() { return model; }
+    public int getTimeout() { return timeout; }
 }
