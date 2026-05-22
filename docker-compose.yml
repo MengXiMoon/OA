@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: oa-postgres
+    environment:
+      POSTGRES_DB: oa_db
+      POSTGRES_USER: oa_user
+      POSTGRES_PASSWORD: oa_pass_2026
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U oa_user -d oa_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: oa-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - redisdata:/data
+
+  # RabbitMQ 消息队列
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: oa-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Spring Boot 后端
+  oa-server:
+    build: ./oa-server
+    container_name: oa-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/oa_db
+      SPRING_DATASOURCE_USERNAME: oa_user
+      SPRING_DATASOURCE_PASSWORD: oa_pass_2026
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  # Vue 前端 + Nginx
+  oa-web:
+    build: ./oa-web
+    container_name: oa-web
+    ports:
+      - "80:80"
+    depends_on:
+      - oa-server
+
+volumes:
+  pgdata:
+  redisdata:
