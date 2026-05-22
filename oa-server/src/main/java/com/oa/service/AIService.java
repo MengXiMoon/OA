@@ -61,9 +61,9 @@ public class AIService {
 
     private String buildTaskSuggestPrompt(List<String> tasks) {
         StringBuilder sb = new StringBuilder();
-        sb.append("你是办公助手。请根据以下任务列表，分析每个任务的紧急程度和重要性，给出优先级排序建议（高/中/低），100字以内。\n\n");
+        sb.append("你是办公助手。分析以下任务，按紧急程度和重要性排序输出，200字以内。输出时请用任务的实际名称（如 [XXX系统开发] 建议优先处理），不要用编号。\n\n");
         for (int i = 0; i < tasks.size(); i++) {
-            sb.append("任务").append(i + 1).append("：").append(tasks.get(i)).append("\n");
+            sb.append(tasks.get(i)).append("\n");
         }
         return sb.toString();
     }

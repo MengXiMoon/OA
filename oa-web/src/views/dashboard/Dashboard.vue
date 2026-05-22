@@ -103,7 +103,7 @@ async function suggestTasks() {
   aiResult.value = ''
   try {
     const tasks = await getMyTasks({ page: 1, pageSize: 20 })
-    const taskTexts = (tasks.data?.records || []).map(t => `[${t.priority || '中'}] ${t.title}（截止${t.deadline || '未设定'}）`)
+    const taskTexts = (tasks.data?.records || []).map(t => `【${t.title}】优先级:${t.priority || '中'} 截止:${t.deadline || '未设定'} 状态:${t.status || '未知'}`)
     if (taskTexts.length === 0) {
       aiResult.value = '暂无待处理任务。'
     } else {
