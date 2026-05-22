@@ -18,7 +18,7 @@
     <div class="ai-card">
       <div class="ai-header">
         <span class="ai-title">AI 助手</span>
-        <span class="ai-badge">DeepSeek</span>
+        <span class="ai-badge">{{ aiModel }}</span>
       </div>
       <div class="ai-actions">
         <el-button @click="generateSummary" :loading="aiLoading">
@@ -48,12 +48,20 @@
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { Bell, List, DocumentChecked, Calendar, MagicStick, Cpu, ChatDotRound } from '@element-plus/icons-vue'
-import { generateWeeklySummary, suggestTaskPriority } from '@/api/ai'
+import { getAIConfig, generateWeeklySummary, suggestTaskPriority } from '@/api/ai'
 import { getMyTasks } from '@/api/task'
 import { getWorkLogs } from '@/api/log'
 import { ElMessage } from 'element-plus'
+import { onMounted } from 'vue'
 
 const userStore = useUserStore()
+const aiModel = ref('AI')
+onMounted(async () => {
+  try {
+    const res = await getAIConfig()
+    aiModel.value = res.data.model || 'AI'
+  } catch { /* ignore */ }
+})
 
 const roleName = computed(() => {
   const map = { admin: '管理员', manager: '部门经理', employee: '普通员工', '管理员': '管理员', '部门经理': '部门经理', '普通员工': '普通员工' }
