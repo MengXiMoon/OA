@@ -49,6 +49,8 @@ import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { Bell, List, DocumentChecked, Calendar, MagicStick, Cpu, ChatDotRound } from '@element-plus/icons-vue'
 import { generateWeeklySummary, suggestTaskPriority } from '@/api/ai'
+import { getMyTasks } from '@/api/task'
+import { getWorkLogs } from '@/api/log'
 import { ElMessage } from 'element-plus'
 
 const userStore = useUserStore()
@@ -81,14 +83,16 @@ async function generateSummary() {
   aiLoading.value = true
   aiResult.value = ''
   try {
-    const res = await generateWeeklySummary([
-      '完成了OA系统后端API开发',
-      '修复了5个测试反馈的BUG',
-      '编写了用户使用手册',
-    ])
-    aiResult.value = res.data
+    const logs = await getWorkLogs({ page: 1, pageSize: 20 })
+    const logTexts = (logs.data?.records || []).map(l => l.todayContent || l.content || '').filter(t => t)
+    if (logTexts.length === 0) {
+      aiResult.value = '暂无工作日志，请先到工作日志模块填写。'
+    } else {
+      const res = await generateWeeklySummary(logTexts)
+      aiResult.value = res.data
+    }
   } catch {
-    ElMessage.warning('AI 服务未配置，请在 application.yml 中设置 ai.api-key')
+    ElMessage.warning('AI 服务未配置或调用失败')
   } finally {
     aiLoading.value = false
   }
@@ -98,14 +102,16 @@ async function suggestTasks() {
   aiLoading.value = true
   aiResult.value = ''
   try {
-    const res = await suggestTaskPriority([
-      '完成后端API开发（截止明天）',
-      '修复用户反馈的BUG（本周内）',
-      '编写系统文档（下周一前）',
-    ])
-    aiResult.value = res.data
+    const tasks = await getMyTasks({ page: 1, pageSize: 20 })
+    const taskTexts = (tasks.data?.records || []).map(t => `[${t.priority || '中'}] ${t.title}（截止${t.deadline || '未设定'}）`)
+    if (taskTexts.length === 0) {
+      aiResult.value = '暂无待处理任务。'
+    } else {
+      const res = await suggestTaskPriority(taskTexts)
+      aiResult.value = res.data
+    }
   } catch {
-    ElMessage.warning('AI 服务未配置，请在 application.yml 中设置 ai.api-key')
+    ElMessage.warning('AI 服务未配置或调用失败')
   } finally {
     aiLoading.value = false
   }
