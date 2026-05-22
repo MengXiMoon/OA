@@ -13,6 +13,30 @@
         </div>
       </div>
     </div>
+
+    <!-- AI 助手 -->
+    <div class="ai-card">
+      <div class="ai-header">
+        <span class="ai-title">AI 助手</span>
+        <span class="ai-badge">DeepSeek</span>
+      </div>
+      <div class="ai-actions">
+        <el-button @click="generateSummary" :loading="aiLoading">
+          <el-icon><MagicStick /></el-icon> 生成周报摘要
+        </el-button>
+        <el-button @click="suggestTasks" :loading="aiLoading">
+          <el-icon><Cpu /></el-icon> 任务优先级建议
+        </el-button>
+      </div>
+      <div v-if="aiResult" class="ai-result">
+        <div class="ai-result-header">
+          <el-icon :size="14"><ChatDotRound /></el-icon>
+          <span>AI 回复</span>
+        </div>
+        <p class="ai-result-text">{{ aiResult }}</p>
+      </div>
+    </div>
+
     <div class="welcome-card">
       <h3 class="welcome-title">工作台</h3>
       <p class="welcome-text">当前角色：{{ roleName }}。从这里开始你的一天，所有模块均可从左侧导航栏访问。</p>
@@ -23,7 +47,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { Bell, List, DocumentChecked, Calendar } from '@element-plus/icons-vue'
+import { Bell, List, DocumentChecked, Calendar, MagicStick, Cpu, ChatDotRound } from '@element-plus/icons-vue'
+import { generateWeeklySummary, suggestTaskPriority } from '@/api/ai'
+import { ElMessage } from 'element-plus'
 
 const userStore = useUserStore()
 
@@ -47,6 +73,43 @@ const stats = ref([
   { label: '待审批', value: 3, icon: DocumentChecked },
   { label: '会议', value: 5, icon: Calendar },
 ])
+
+const aiLoading = ref(false)
+const aiResult = ref('')
+
+async function generateSummary() {
+  aiLoading.value = true
+  aiResult.value = ''
+  try {
+    const res = await generateWeeklySummary([
+      '完成了OA系统后端API开发',
+      '修复了5个测试反馈的BUG',
+      '编写了用户使用手册',
+    ])
+    aiResult.value = res.data
+  } catch {
+    ElMessage.warning('AI 服务未配置，请在 application.yml 中设置 ai.api-key')
+  } finally {
+    aiLoading.value = false
+  }
+}
+
+async function suggestTasks() {
+  aiLoading.value = true
+  aiResult.value = ''
+  try {
+    const res = await suggestTaskPriority([
+      '完成后端API开发（截止明天）',
+      '修复用户反馈的BUG（本周内）',
+      '编写系统文档（下周一前）',
+    ])
+    aiResult.value = res.data
+  } catch {
+    ElMessage.warning('AI 服务未配置，请在 application.yml 中设置 ai.api-key')
+  } finally {
+    aiLoading.value = false
+  }
+}
 </script>
 
 <style scoped>
@@ -66,6 +129,20 @@ const stats = ref([
 .stat-body { display: flex; flex-direction: column; }
 .stat-number { font-size: 22px; font-weight: 500; color: var(--text-primary); line-height: 1.1; }
 .stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+.ai-card {
+  padding: 20px; margin-bottom: 20px;
+  background: var(--bg-surface); border: 0.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+.ai-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.ai-title { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+.ai-badge { font-size: 10px; color: var(--text-disabled); background: rgba(0,0,0,0.04); padding: 1px 6px; border-radius: 100px; }
+.ai-actions { display: flex; gap: 10px; margin-bottom: 14px; }
+.ai-result { padding: 14px; background: rgba(0,0,0,0.02); border-radius: var(--radius-sm); border: 0.5px solid var(--border-color); }
+.ai-result-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 12px; color: var(--text-secondary); }
+.ai-result-text { font-size: 13px; color: var(--text-primary); line-height: 1.7; white-space: pre-wrap; margin: 0; }
+
 .welcome-card { padding: 20px; background: var(--bg-surface); border: 0.5px solid var(--border-color); border-radius: var(--radius-sm); }
 .welcome-title { font-size: 14px; font-weight: 500; color: var(--text-primary); margin: 0 0 6px; }
 .welcome-text { font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.6; }
