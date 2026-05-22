@@ -31,9 +31,18 @@ public class OaTaskService extends ServiceImpl<OaTaskMapper, OaTask> {
         return new PageResult<>(page.getRecords(), page.getTotal(), page.getCurrent(), page.getSize());
     }
 
+    private final NotificationService notificationService;
+
+    public OaTaskService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
     public void assignTask(OaTask task) {
         task.setCreatorId(SecurityUtils.getCurrentUserId());
         task.setStatus("pending");
         save(task);
+        // 异步通知：新任务分配
+        notificationService.notifyTaskAssigned(
+                String.valueOf(task.getAssigneeId()), task.getTitle());
     }
 }

@@ -34,10 +34,21 @@ public class OaLeaveService extends ServiceImpl<OaLeaveMapper, OaLeave> {
         return super.save(leave);
     }
 
+    private final NotificationService notificationService;
+
+    public OaLeaveService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
     public void approve(Long id, String status) {
         OaLeave leave = getById(id);
         leave.setStatus(status);
         leave.setApproverId(SecurityUtils.getCurrentUserId());
         updateById(leave);
+        // 异步通知：审批结果
+        notificationService.notifyApprovalResult(
+                String.valueOf(leave.getApplicantId()),
+                "请假",
+                status);
     }
 }
