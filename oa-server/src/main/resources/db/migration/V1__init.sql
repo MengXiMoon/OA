@@ -193,6 +193,6 @@ CREATE TABLE oa_meeting (
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 初始数据：管理员 (password: admin123)
+-- 初始数据：管理员 (password: 123456)
 INSERT INTO sys_user (username, password, real_name, role, status)
-VALUES ('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5Eh', '系统管理员', 'admin', 1);
+VALUES ('admin', '$2a$10$YFUqoFxdXd3y4R7WvlG30uBo8v2LL/xD4UNLz00jntFI/9JRqhO.G', '系统管理员', '管理员', 1);

@@ -2,8 +2,6 @@
 
 基于 Spring Boot 3 + Vue 3 + Element Plus + PostgreSQL 的全栈办公自动化系统。
 
-> **毕业设计项目** · 前后端分离 · JWT 认证 · RBAC 权限 · Docker 部署 · AI 助手
-
 ## 功能模块
 
 | 模块 | 功能 |
@@ -81,9 +79,9 @@ Docker Compose 包含 5 个服务：PostgreSQL · Redis · RabbitMQ · 后端 ·
 
 | 账号 | 密码 | 角色 | 姓名 |
 |------|------|------|------|
-| admin | admin123 | 管理员 | 系统管理员 |
-| zhangsan | admin123 | 部门经理 | 张三 |
-| lisi | admin123 | 普通员工 | 李四 |
+| admin | 123456 | 管理员 | 系统管理员 |
+| zhangsan | 123456 | 部门经理 | 张三 |
+| lisi | 123456 | 普通员工 | 李四 |
 
 > 共 25 个测试用户，8 个部门，306 条测试数据
 
