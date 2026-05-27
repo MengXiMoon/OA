@@ -1,7 +1,9 @@
 package com.oa.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,7 +15,8 @@ public class OaTask {
     private String content;
     private Long creatorId;
     private Long assigneeId;
-    private LocalDateTime deadline;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate deadline;
     private String priority;
     private String status;
     @TableField(fill = FieldFill.INSERT)
